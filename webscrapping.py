@@ -5,23 +5,14 @@ from openpyxl.styles import Font
 from openpyxl.styles.numbers import FORMAT_PERCENTAGE_00
 start_date=datetime(2022,5,1)
 end_date=datetime(2022,8,25)
-stock=['LIC','NDTV','SUNTV']
+stock=['MUKANDLTD']
 for i in stock:
     stock_data=get_history(symbol=i,start=start_date,end=end_date)
     stock_data.to_excel(f'{i}.xlsx')
     #print("Successfully Downloaded The File....!!!")
     stockname=i+'.xlsx'
     wb = openpyxl.load_workbook(stockname)
-    ws=wb.active
-    #DELIVERY QUANTITY
-    ws['Q1']='DELIVERY QUANTITY'
-    for rows in range(2,180):
-        copy1='O'+str(rows)
-        copy2='M'+str(rows)
-        paste='Q'+str(rows)
-        if ws[copy1].value==None or ws[copy2].value==None:
-            break
-        ws[paste].value=((ws[copy2].value*ws[copy1].value)/100)    
+    ws=wb.active    
 
     ws['R1']='ANALYSIS'
     ws['R1'].font = Font(bold=True,color="FF0000")
@@ -52,7 +43,7 @@ for i in stock:
     ws['X1']='DELIVERY'
     ws['X1'].font = Font(bold=True)
     for rows in range(2,126):
-        copy1='Q'+str(rows)
+        copy1='N'+str(rows)
         copy2='T'+str(rows)
         paste='X'+str(rows)
         if ws[copy1].value==None or ws[copy2].value==None:
@@ -88,5 +79,4 @@ for i in stock:
 
     wb.save(f'{i} modified.xlsx')
     print(f"Succeessfully Exported...!!!{i}")
-
 
